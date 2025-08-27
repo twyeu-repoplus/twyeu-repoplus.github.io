@@ -1,68 +1,422 @@
-<!DOCTYPE html><html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เว็บไซต์ถูกระงับการเข้าถึงชั่วคราว</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f8fb;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .container {
-      background: #ffffff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      max-width: 650px;
-    }
-    h1 {
-      color: #c0392b;
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    p {
-      color: #333;
-      font-size: 18px;
-      line-height: 1.8;
-    }
-    .highlight {
-      font-weight: bold;
-      color: #e74c3c;
-    }
-    .note {
-      margin-top: 20px;
-      font-size: 15px;
-      color: #555;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🚫 เนื่องจากเว็บไซต์ฐานข้อมูลของ <span class="highlight">HanakoHiraki.github.io</span> โดนแบนชั่วคราว</h1>
-    <p>
-      ขณะนี้การเข้าถึงเว็บไซต์ <strong>HanakoHiraki.github.io</strong> ถูกระงับการให้บริการชั่วคราว 
-      อันเนื่องมาจากการตรวจสอบด้านความปลอดภัยและมาตรการของผู้ให้บริการ GitHub Pages.
-    </p>
-    <p>
-      การแบนชั่วคราวนี้หมายความว่าฐานข้อมูล เนื้อหา และไฟล์ต่าง ๆ ที่อยู่ภายในเว็บไซต์ 
-      อาจไม่สามารถเข้าถึงได้ในช่วงเวลาหนึ่งจนกว่าการตรวจสอบจะเสร็จสิ้น. 
-      ทีมงานกำลังดำเนินการเพื่อตรวจสอบสาเหตุและแก้ไขปัญหาให้เร็วที่สุด.
-    </p>
-    <p>
-      โปรดอย่าตกใจ เนื้อหาและข้อมูลทั้งหมด <span class="highlight">ไม่ได้หายไป</span> 
-      เพียงแค่ไม่สามารถเข้าถึงได้ชั่วคราว. หากมีความคืบหน้าเกี่ยวกับสถานะการใช้งานของเว็บไซต์ 
-      จะมีการแจ้งให้ทราบเพิ่มเติม.
-    </p>
-    <p class="note">
-      🙏 ขอบคุณสำหรับความเข้าใจและความอดทนค่ะ
-    </p>
-  </div>
-</body>
+
+<!DOCTYPE html>  <html lang="th">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>EchoXperience - Your Private Cinema</title>  
+    <style>  
+        /* CSS for styling the webpage */  
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');  :root {  
+        --primary-color: #e50914; /* Netflix Red for high visibility */  
+        --secondary-color: #141414; /* Rich Black */  
+        --background-color: #000000; /* Pure Black */  
+        --text-color: #f5f5f5; /* Off-white for easy reading */  
+        --text-muted: #808080; /* Gray for secondary text */  
+    }  
+
+    body {  
+        font-family: 'Sarabun', sans-serif;  
+        margin: 0;  
+        background-color: var(--background-color);  
+        color: var(--text-color);  
+        background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%);  
+    }  
+      
+    body.modal-open {  
+        overflow: hidden;  
+    }  
+
+    .container {  
+        max-width: 1200px;  
+        margin: 0 auto;  
+        padding: 20px;  
+    }  
+
+    /* --- Header --- */  
+    .main-header {  
+        background-color: rgba(0,0,0,0.7);  
+        backdrop-filter: blur(10px);  
+        padding: 15px 40px;  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        border-bottom: 1px solid #222;  
+        position: sticky;  
+        top: 0;  
+        z-index: 100;  
+    }  
+
+    .logo {  
+        font-size: 2em;  
+        font-weight: 700;  
+        color: var(--text-color);  
+        text-decoration: none;  
+        letter-spacing: -1px;  
+    }  
+
+    .logo span {  
+        color: var(--primary-color);  
+    }  
+
+    .main-nav a {  
+        color: var(--text-muted);  
+        text-decoration: none;  
+        margin-left: 25px;  
+        font-size: 1.1em;  
+        font-weight: 700;  
+        transition: color 0.3s;  
+    }  
+
+    .main-nav a:hover, .main-nav a.active {  
+        color: var(--text-color);  
+    }  
+
+    /* --- Section Title --- */  
+    .section-title {  
+        font-size: 2.2em;  
+        font-weight: 700;  
+        margin-bottom: 30px;  
+        margin-top: 40px;  
+        color: var(--text-color);  
+        border-left: 5px solid var(--primary-color);  
+        padding-left: 15px;  
+    }  
+
+    /* --- Experience Selector --- */  
+    .experience-section {  
+        background-color: var(--secondary-color);  
+        padding: 30px;  
+        border-radius: 10px;  
+        border: 1px solid #222;  
+    }  
+
+    .experience-form {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
+        gap: 20px;  
+        align-items: end;  
+    }  
+
+    .form-group {  
+        display: flex;  
+        flex-direction: column;  
+    }  
+
+    .form-group label {  
+        margin-bottom: 10px;  
+        font-weight: 700;  
+        font-size: 0.9em;  
+        color: var(--text-muted);  
+    }  
+
+    .form-group select, .form-group input {  
+        padding: 14px;  
+        border-radius: 5px;  
+        border: 1px solid #333;  
+        background-color: #2a2a2a;  
+        color: var(--text-color);  
+        font-family: 'Sarabun', sans-serif;  
+        font-size: 1em;  
+    }  
+
+    .btn-access {  
+        background-color: var(--primary-color);  
+        color: #fff;  
+        padding: 14px 30px;  
+        border: none;  
+        border-radius: 5px;  
+        cursor: pointer;  
+        font-size: 1.1em;  
+        font-weight: 700;  
+        transition: transform 0.2s, background-color 0.3s;  
+        width: 100%;  
+    }  
+
+    .btn-access:hover {  
+        background-color: #f40612;  
+        transform: scale(1.05);  
+    }  
+      
+    /* --- Movie Grid --- */  
+    .movie-grid {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));  
+        gap: 30px;  
+    }  
+
+    .movie-card {  
+        background: var(--secondary-color);  
+        border-radius: 8px;  
+        overflow: hidden;  
+        border: 1px solid #222;  
+        transition: transform 0.3s, box-shadow 0.3s;  
+        cursor: pointer;  
+        position: relative;  
+    }  
+
+    .movie-card:hover {  
+        transform: translateY(-10px) scale(1.03);  
+        box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);  
+    }  
+
+    .movie-poster {  
+        position: relative;  
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */  
+        background-color: #000;  
+    }  
+
+    .movie-poster img {  
+        position: absolute;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        display: block;  
+        object-fit: cover;  
+    }  
+
+    .status-tag {  
+        position: absolute;  
+        top: 10px;  
+        left: 10px;  
+        padding: 5px 12px;  
+        border-radius: 20px;  
+        font-size: 0.8em;  
+        font-weight: 700;  
+        color: #fff;  
+        text-transform: uppercase;  
+        z-index: 1;  
+    }  
+    .status-tag.now-showing {  
+        background-color: var(--primary-color);  
+    }  
+    .status-tag.coming-soon {  
+        background-color: var(--text-muted);  
+    }  
+
+    .movie-info {  
+        padding: 20px;  
+    }  
+
+    .movie-title {  
+        font-size: 1.3em;  
+        font-weight: 700;  
+        margin: 0 0 10px 0;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+    }  
+
+    .movie-details {  
+        font-size: 0.9em;  
+        color: var(--text-muted);  
+    }  
+
+    /* --- Footer --- */  
+    .main-footer {  
+        text-align: center;  
+        padding: 40px 20px;  
+        margin-top: 50px;  
+        border-top: 1px solid #222;  
+    }  
+
+    /* --- Video Modal Styles --- */  
+    .modal-overlay {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0, 0, 0, 0.85);  
+        backdrop-filter: blur(5px);  
+        display: none; /* Hidden by default */  
+        justify-content: center;  
+        align-items: center;  
+        z-index: 1000;  
+    }  
+    .modal-overlay.active {  
+        display: flex; /* Shown when active */  
+    }  
+    .modal-content {  
+        position: relative;  
+        width: 90%;  
+        max-width: 1100px;  
+    }  
+    .close-button {  
+        position: absolute;  
+        top: -45px; /* Positioned above the video */  
+        right: 0;  
+        font-size: 40px;  
+        color: #fff;  
+        cursor: pointer;  
+        line-height: 1;  
+    }  
+    .video-container {  
+        position: relative;  
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */  
+        height: 0;  
+        background: #000;  
+    }  
+    .video-container video { /* Updated from iframe to video */  
+        position: absolute;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        border: 0;  
+    }  
+
+</style>
+
+</head>  
+<body>  <header class="main-header">  
+    <a href="#" class="logo">Echo<span>X</span>perience</a>  
+    <nav class="main-nav">  
+        <a href="#" class="active">หน้าแรก</a>  
+        <a href="#">ภาพยนตร์</a>  
+        <a href="#">แพ็กเกจ</a>  
+        <a href="#">ติดต่อเรา</a>  
+    </nav>  
+</header>  
+
+<main class="container">  
+    <section class="experience-section">  
+        <form class="experience-form">  
+            <div class="form-group">  
+                <label for="movie-select">เลือกภาพยนตร์</label>  
+                <select id="movie-select">  
+                    <option>Colorful Stage! The Movie: A Miku Who Can't Sing</option>  
+                </select>  
+            </div>  
+            <div class="form-group">  
+                <label for="format-select">เลือกรูปแบบการรับชม</label>  
+                <select id="format-select">  
+                    <option>รับชมออนไลน์ (Streaming)</option>  
+                    <option>ไพรเวทโฮมเธียเตอร์ (บางกะปิ)</option>  
+                    <option>แผ่นหนัง DVD</option>  
+                    <option>USB</option>  
+                </select>  
+            </div>  
+            <div class="form-group">  
+                <label for="date-select">เลือกวันที่</label>  
+                <input type="date" id="date-select" value="2025-11-08">  
+            </div>  
+            <div class="form-group">  
+                <label> </label>  
+                <button type="submit" class="btn-access">รับสิทธิ์เข้าชม</button>  
+            </div>  
+        </form>  
+    </section>  
+
+    <section class="movie-showcase">  
+        <h2 class="section-title">เร็วๆ นี้ (Coming Soon)</h2>  
+        <div class="movie-grid">  
+            <!-- Changed data-video-src to data-video-playlist and added both video files -->  
+            <div class="movie-card" data-video-playlist="https://www.youtube-nocookie.com/embed/ysum6SigALw?si=JCa2VAyLFbPsLZSH">   
+                <div class="movie-poster">  
+                     <img src="https://i.postimg.cc/TYWVDYcp/37-26-C6678.png" alt="Colorful Stage Movie Poster">  
+                    <div class="status-tag coming-soon">Coming Soon</div>  
+                </div>  
+                <div class="movie-info">  
+                    <h3 class="movie-title">Colorful Stage! The Movie: A Miku Who Can't Sing</h3>  
+                    <p class="movie-details">เพลง / อนิเมะ / ดราม่า</p>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+</main>  
+
+<footer class="main-footer">  
+    <p>© 2025 EchoXperience. Your Private Cinema Experience.</p>  
+</footer>  
+
+<div id="video-modal" class="modal-overlay">  
+    <div class="modal-content">  
+        <span class="close-button">×</span>  
+        <div class="video-container">  
+            <!-- Replaced iframe with video tag -->  
+            <video id="video-player" controls></video>  
+        </div>  
+    </div>  
+</div>  
+
+<script>  
+    document.addEventListener('DOMContentLoaded', () => {  
+        const movieCards = document.querySelectorAll('.movie-card');  
+        const modal = document.getElementById('video-modal');  
+        // This now correctly refers to the <video> element  
+        const videoPlayer = document.getElementById('video-player');  
+        const closeButton = document.querySelector('.close-button');  
+        const body = document.body;  
+
+        // Variables to manage the playlist  
+        let currentPlaylist = [];  
+        let currentVideoIndex = 0;  
+
+        // Function to play the next video in the playlist  
+        const playNextVideo = () => {  
+            currentVideoIndex++;  
+            if (currentVideoIndex < currentPlaylist.length) {  
+                videoPlayer.src = currentPlaylist[currentVideoIndex];  
+                videoPlayer.play();  
+            } else {  
+                // If the playlist is finished, close the modal  
+                closeModal();  
+            }  
+        };  
+
+        // Updated openModal to handle playlists  
+        const openModal = () => {  
+            if (currentPlaylist.length > 0) {  
+                currentVideoIndex = 0;  
+                videoPlayer.src = currentPlaylist[currentVideoIndex];  
+                modal.classList.add('active');  
+                body.classList.add('modal-open');  
+                // We call .play() on the video element directly  
+                videoPlayer.play().catch(error => {  
+                    console.error("Autoplay was prevented by the browser:", error);  
+                    // If autoplay fails, the user can click the play button on the controls.  
+                });  
+            }  
+        };  
+
+        // Updated closeModal to reset the player and playlist  
+        const closeModal = () => {  
+            modal.classList.remove('active');  
+            body.classList.remove('modal-open');  
+            videoPlayer.pause();  
+            videoPlayer.src = '';  
+            // Clear the playlist variables  
+            currentPlaylist = [];  
+            currentVideoIndex = 0;  
+        };  
+
+        // Updated click listener to read the playlist  
+        movieCards.forEach(card => {  
+            card.addEventListener('click', () => {  
+                const playlistSrc = card.dataset.videoPlaylist;  
+                if (playlistSrc) {  
+                    // Split the string of video sources into an array  
+                    currentPlaylist = playlistSrc.split(',').map(src => src.trim());  
+                    openModal();  
+                }  
+            });  
+        });  
+
+        closeButton.addEventListener('click', closeModal);  
+
+        modal.addEventListener('click', (event) => {  
+            // Close modal if the overlay background is clicked  
+            if (event.target === modal) {  
+                closeModal();  
+            }  
+        });  
+
+        // Add an event listener to the video player that triggers when a video ends  
+        videoPlayer.addEventListener('ended', playNextVideo);  
+    });  
+</script>
+
+</body>  
 </html>

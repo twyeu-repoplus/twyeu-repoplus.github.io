@@ -8,7 +8,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for the Sarabun font and video modal */
+        /* Custom styles for the Sarabun font */
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
         
         /* Apply Sarabun font and set base styles */
@@ -18,12 +18,8 @@
             color: #f5f5f5;
         }
 
-        /* Prevent scrolling when modal is active */
-        .modal-open {
-            overflow: hidden;
-        }
-
-        /* Video modal overlay */
+        /* Video modal overlay is no longer needed but keeping styles for consistency
+           in case it's used elsewhere. */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -119,31 +115,31 @@
             <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-red-600 pl-4">เร็วๆ นี้ (Coming Soon)</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
                 <!-- Movie card 1 -->
-                <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105" data-video-playlist="https://www.youtube-nocookie.com/embed/ysum6SigALw?si=JCa2VAyLFbPsLZSH">
+                <a href="5sF9GwU0f86b.html" class="block bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105">
                     <div class="relative w-full aspect-video bg-gray-950">
                         <img src="https://i.postimg.cc/TYWVDYcp/37-26-C6678.png" alt="Colorful Stage Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-gray-500 text-white uppercase">Coming Soon</span>
                     </div>
                     <div class="p-4">
                         <h3 class="text-lg font-bold text-white truncate">Colorful Stage! The Movie: A Miku Who Can't Sing</h3>
-                        <p class="text-sm text-gray-400 mt-1">เพลง / อนิเมะ / ดราม่า   |   105 นาที  | เรื่มสตรีม 08/11/68 จนถึง 14/02/69 แค่ 4 รอบ</p>
+                        <p class="text-sm text-gray-400 mt-1">เพลง / อนิเมะ / ดราม่า  |  105 นาที  | เรื่มสตรีม 08/11/68 จนถึง 14/02/69 แค่ 4 รอบ</p>
                         <p class="text-sm text-gray-400 mt-1">หลังฉายจบแล้ว จะมีการเปิดให้พรีออเดอร์ของนานก่อนจัดส่ง 2 เดือน</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Movie card 2 -->
-                <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105" data-video-playlist="https://www.youtube-nocookie.com/embed/Fw0S4sQcR6Y?si=l4b45_k57-79K34z">
+                <a href="#" class="block bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105">
                     <div class="relative w-full aspect-video bg-gray-950">
                         <img src="https://static.wikia.nocookie.net/senpaiisanotokonoko/images/f/f3/Senpai_wa_Otokonoko_-_Clear_After_the_Rain_Key_Visual_2.jpg" alt="Senpai Is an Otokonoko Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-gray-500 text-white uppercase">Coming Soon</span>
                     </div>
                     <div class="p-4">
                         <h3 class="text-lg font-bold text-white truncate">Senpai Is an Otokonoko: Clear After the Rain</h3>
-                        <p class="text-sm text-gray-400 mt-1">คอมเมดี้ / โรแมนติก / ดราม่า   |   ~82 นาที  |  เริ่มสตรีม --/--/69 จนถึง --/--/69 แค่ - รอบ</p>
+                        <p class="text-sm text-gray-400 mt-1">คอมเมดี้ / โรแมนติก / ดราม่า  |  ~82 นาที  |  เริ่มสตรีม --/--/69 จนถึง --/--/69 แค่ - รอบ</p>
                         <p class="text-sm text-gray-400 mt-1">ขณะนี้แผ่น BD ของ JP ออกจำหน่ายแล้วเมื่อ 27/08/68</p>
                         <p class="text-sm text-gray-400 mt-1">หลังฉายจบแล้ว จะมีการเปิดให้พรีออเดอร์ของนานก่อนจัดส่ง 2 เดือน</p>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
 
@@ -156,7 +152,7 @@
         <p>© CLOUDFLARE/GITHUB</p>
     </footer>
 
-    <!-- Video modal container -->
+    <!-- Video modal container is now unused but kept in the HTML structure -->
     <div id="video-modal" class="modal-overlay">
         <div class="relative w-11/12 max-w-5xl">
             <span class="close-button absolute -top-10 sm:-top-12 right-0 text-4xl sm:text-5xl font-light text-white cursor-pointer transition-colors duration-200 hover:text-red-600">&times;</span>
@@ -167,86 +163,10 @@
     </div>
 
     <script>
-        // JavaScript for handling video playback and modal
+        // JavaScript for form functionality and other non-modal interactions
         document.addEventListener('DOMContentLoaded', () => {
-            const movieCards = document.querySelectorAll('.movie-card');
-            const modal = document.getElementById('video-modal');
-            const videoPlayer = document.getElementById('video-player');
-            const closeButton = document.querySelector('.close-button');
-            const body = document.body;
-
-            // Global variables to manage the playlist
-            let currentPlaylist = [];
-            let currentVideoIndex = 0;
-
-            /**
-             * Plays the next video in the current playlist.
-             * If the playlist is finished, it closes the modal.
-             */
-            const playNextVideo = () => {
-                currentVideoIndex++;
-                if (currentVideoIndex < currentPlaylist.length) {
-                    videoPlayer.src = currentPlaylist[currentVideoIndex];
-                    videoPlayer.play().catch(error => {
-                        console.error("Autoplay of the next video was prevented:", error);
-                    });
-                } else {
-                    // All videos in the playlist have been played
-                    closeModal();
-                }
-            };
-
-            /**
-             * Opens the video modal and starts playing the first video.
-             */
-            const openModal = () => {
-                if (currentPlaylist.length > 0) {
-                    currentVideoIndex = 0;
-                    videoPlayer.src = currentPlaylist[currentVideoIndex];
-                    modal.classList.add('active');
-                    body.classList.add('modal-open');
-                    // Attempt to play the video directly
-                    videoPlayer.play().catch(error => {
-                        console.error("Autoplay was prevented by the browser:", error);
-                    });
-                }
-            };
-
-            /**
-             * Closes the video modal and resets the player.
-             */
-            const closeModal = () => {
-                modal.classList.remove('active');
-                body.classList.remove('modal-open');
-                videoPlayer.pause();
-                videoPlayer.src = ''; // Clear the video source
-                currentPlaylist = []; // Clear the playlist
-                currentVideoIndex = 0; // Reset the playlist index
-            };
-
-            // Add click listeners to all movie cards
-            movieCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const playlistSrc = card.dataset.videoPlaylist;
-                    if (playlistSrc) {
-                        // Split the data attribute string into an array of URLs
-                        currentPlaylist = playlistSrc.split(',').map(src => src.trim());
-                        openModal();
-                    }
-                });
-            });
-
-            // Add click listeners for closing the modal
-            closeButton.addEventListener('click', closeModal);
-            modal.addEventListener('click', (event) => {
-                // Close modal if the overlay background is clicked, but not the video itself
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // Listen for when a video ends to play the next one
-            videoPlayer.addEventListener('ended', playNextVideo);
+            // Note: The video modal JavaScript has been removed as it is no longer needed.
+            // Clicking on the movie posters now navigates directly to a new HTML page.
         });
     </script>
 

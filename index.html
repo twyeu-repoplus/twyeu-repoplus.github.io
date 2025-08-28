@@ -1,435 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
 
-<!DOCTYPE html>  <html lang="th">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>EchoXperience - Your Private Cinema</title>  
-    <style>  
-        /* CSS for styling the webpage */  
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');  :root {  
-        --primary-color: #e50914; /* Netflix Red for high visibility */  
-        --secondary-color: #141414; /* Rich Black */  
-        --background-color: #000000; /* Pure Black */  
-        --text-color: #f5f5f5; /* Off-white for easy reading */  
-        --text-muted: #808080; /* Gray for secondary text */  
-    }  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoXperience - Your Private Cinema</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Sarabun font and video modal */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+        
+        /* Apply Sarabun font and set base styles */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #000;
+            color: #f5f5f5;
+        }
 
-    body {  
-        font-family: 'Sarabun', sans-serif;  
-        margin: 0;  
-        background-color: var(--background-color);  
-        color: var(--text-color);  
-        background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%);  
-    }  
-      
-    body.modal-open {  
-        overflow: hidden;  
-    }  
+        /* Prevent scrolling when modal is active */
+        .modal-open {
+            overflow: hidden;
+        }
 
-    .container {  
-        max-width: 1200px;  
-        margin: 0 auto;  
-        padding: 20px;  
-    }  
+        /* Video modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    /* --- Header --- */  
-    .main-header {  
-        background-color: rgba(0,0,0,0.7);  
-        backdrop-filter: blur(10px);  
-        padding: 15px 40px;  
-        display: flex;  
-        justify-content: space-between;  
-        align-items: center;  
-        border-bottom: 1px solid #222;  
-        position: sticky;  
-        top: 0;  
-        z-index: 100;  
-    }  
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        /* Video container for 16:9 aspect ratio */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            height: 0;
+            background: #000;
+        }
 
-    .logo {  
-        font-size: 2em;  
-        font-weight: 700;  
-        color: var(--text-color);  
-        text-decoration: none;  
-        letter-spacing: -1px;  
-    }  
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
 
-    .logo span {  
-        color: var(--primary-color);  
-    }  
+<body class="bg-gray-950">
 
-    .main-nav a {  
-        color: var(--text-muted);  
-        text-decoration: none;  
-        margin-left: 25px;  
-        font-size: 1.1em;  
-        font-weight: 700;  
-        transition: color 0.3s;  
-    }  
+    <!-- Header section -->
+    <header class="sticky top-0 z-50 bg-gray-950/70 backdrop-blur-lg shadow-lg">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center py-4 px-6">
+            <a href="#" class="text-3xl font-bold text-white tracking-tight">Echo<span class="text-red-600">X</span>perience</a>
+            <nav class="flex-grow mt-4 sm:mt-0 sm:ml-8 text-center sm:text-left">
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">หน้าแรก</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ภาพยนตร์</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">แพ็กเกจ</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ติดต่อเรา</a>
+            </nav>
+        </div>
+    </header>
 
-    .main-nav a:hover, .main-nav a.active {  
-        color: var(--text-color);  
-    }  
+    <!-- Main content container -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
 
-    /* --- Section Title --- */  
-    .section-title {  
-        font-size: 2.2em;  
-        font-weight: 700;  
-        margin-bottom: 30px;  
-        margin-top: 40px;  
-        color: var(--text-color);  
-        border-left: 5px solid var(--primary-color);  
-        padding-left: 15px;  
-    }  
+        <!-- Experience selector form section -->
+        <section class="bg-gray-900 rounded-xl p-6 sm:p-8 border border-gray-800 shadow-2xl">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6">เลือกประสบการณ์</h2>
+            <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                <div class="flex flex-col">
+                    <label for="movie-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกภาพยนตร์</label>
+                    <select id="movie-select" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                        <option>Colorful Stage! The Movie: A Miku Who Can't Sing</option>
+                        <option>Senpai Is an Otokonoko: Clear After the Rain</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="format-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกรูปแบบการรับชม</label>
+                    <select id="format-select" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                        <option>รับชมออนไลน์ (Streaming)</option>
+                        <option>ไพรเวทโฮมเธียเตอร์ (บางกะปิ)</option>
+                        <option>แผ่นหนัง DVD-RIP</option>
+                        <option>แผ่นหนัง BD-RIP</option>
+                        <option>USB</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="date-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกวันที่</label>
+                    <input type="date" id="date-select" value="2025-11-08" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                </div>
+                <!-- This div is for the instructions/button -->
+                <div class="flex flex-col">
+                    <p class="text-gray-400 text-sm font-semibold mb-4 lg:mb-2 leading-relaxed">เมื่อทำเสร็จแล้วให้แคปหน้าจอและส่งไปยัง hanakphiraki@gmail.com หรือ FB: Hanako Hiraki เพื่อทำการรับตั๋ว</p>
+                    <button type="submit" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">
+                        <a href="mailto:hanakphiraki@gmail.com?subject=ขอรับตั๋วภาพยนตร์&body=ภาพยนตร์: Colorful Stage! The Movie: A Miku Who Can't Sing%0Aรูปแบบการรับชม: รับชมออนไลน์ (Streaming)%0Aวันที่: 2025-11-08%0A%0A(โปรดแนบรูปแคปหน้าจอมาด้วยค่ะ)" class="text-white no-underline">รับตั๋วภาพยนตร์</a>
+                    </button>
+                </div>
+            </form>
+        </section>
 
-    /* --- Experience Selector --- */  
-    .experience-section {  
-        background-color: var(--secondary-color);  
-        padding: 30px;  
-        border-radius: 10px;  
-        border: 1px solid #222;  
-    }  
+        <!-- Movie showcase section -->
+        <section class="mt-12 sm:mt-16">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-red-600 pl-4">เร็วๆ นี้ (Coming Soon)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Movie card 1 -->
+                <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105" data-video-playlist="https://www.youtube-nocookie.com/embed/ysum6SigALw?si=JCa2VAyLFbPsLZSH">
+                    <div class="relative w-full aspect-video bg-gray-950">
+                        <img src="https://i.postimg.cc/TYWVDYcp/37-26-C6678.png" alt="Colorful Stage Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-gray-500 text-white uppercase">Coming Soon</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white truncate">Colorful Stage! The Movie: A Miku Who Can't Sing</h3>
+                        <p class="text-sm text-gray-400 mt-1">เพลง / อนิเมะ / ดราม่า   |   105 นาที  | เรื่มสตรีม 08/11/68</p>
+                    </div>
+                </div>
 
-    .experience-form {  
-        display: grid;  
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
-        gap: 20px;  
-        align-items: end;  
-    }  
+                <!-- Movie card 2 -->
+                <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105" data-video-playlist="https://www.youtube-nocookie.com/embed/Fw0S4sQcR6Y?si=l4b45_k57-79K34z">
+                    <div class="relative w-full aspect-video bg-gray-950">
+                        <img src="https://static.wikia.nocookie.net/senpaiisanotokonoko/images/f/f3/Senpai_wa_Otokonoko_-_Clear_After_the_Rain_Key_Visual_2.jpg" alt="Senpai Is an Otokonoko Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-gray-500 text-white uppercase">Coming Soon</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white truncate">Senpai Is an Otokonoko: Clear After the Rain</h3>
+                        <p class="text-sm text-gray-400 mt-1">คอมเมดี้ / โรแมนติก / ดราม่า   |   82 นาที  |  เริ่มสตรีม ××/××/69</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    .form-group {  
-        display: flex;  
-        flex-direction: column;  
-    }  
+    </main>
 
-    .form-group label {  
-        margin-bottom: 10px;  
-        font-weight: 700;  
-        font-size: 0.9em;  
-        color: var(--text-muted);  
-    }  
+    <!-- Footer section -->
+    <footer class="text-center text-gray-500 text-sm py-8 border-t border-gray-800 mt-16">
+        <p>© 2025 EchoXperience. Your Private Cinema Experience.</p>
+        <p>© 2024-2025 THE WORLD IMPACT GROUP</p>
+        <p>© CLOUDFLARE/GITHUB</p>
+    </footer>
 
-    .form-group select, .form-group input {  
-        padding: 14px;  
-        border-radius: 5px;  
-        border: 1px solid #333;  
-        background-color: #2a2a2a;  
-        color: var(--text-color);  
-        font-family: 'Sarabun', sans-serif;  
-        font-size: 1em;  
-    }  
+    <!-- Video modal container -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="relative w-11/12 max-w-5xl">
+            <span class="close-button absolute -top-10 sm:-top-12 right-0 text-4xl sm:text-5xl font-light text-white cursor-pointer transition-colors duration-200 hover:text-red-600">&times;</span>
+            <div class="video-container rounded-lg overflow-hidden shadow-2xl">
+                <video id="video-player" controls></video>
+            </div>
+        </div>
+    </div>
 
-    .btn-access {  
-        background-color: var(--primary-color);  
-        color: #fff;  
-        padding: 14px 30px;  
-        border: none;  
-        border-radius: 5px;  
-        cursor: pointer;  
-        font-size: 1.1em;  
-        font-weight: 700;  
-        transition: transform 0.2s, background-color 0.3s;  
-        width: 100%;  
-    }  
+    <script>
+        // JavaScript for handling video playback and modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const movieCards = document.querySelectorAll('.movie-card');
+            const modal = document.getElementById('video-modal');
+            const videoPlayer = document.getElementById('video-player');
+            const closeButton = document.querySelector('.close-button');
+            const body = document.body;
 
-    .btn-access:hover {  
-        background-color: #f40612;  
-        transform: scale(1.05);  
-    }  
-      
-    /* --- Movie Grid --- */  
-    .movie-grid {  
-        display: grid;  
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));  
-        gap: 30px;  
-    }  
+            // Global variables to manage the playlist
+            let currentPlaylist = [];
+            let currentVideoIndex = 0;
 
-    .movie-card {  
-        background: var(--secondary-color);  
-        border-radius: 8px;  
-        overflow: hidden;  
-        border: 1px solid #222;  
-        transition: transform 0.3s, box-shadow 0.3s;  
-        cursor: pointer;  
-        position: relative;  
-    }  
+            /**
+             * Plays the next video in the current playlist.
+             * If the playlist is finished, it closes the modal.
+             */
+            const playNextVideo = () => {
+                currentVideoIndex++;
+                if (currentVideoIndex < currentPlaylist.length) {
+                    videoPlayer.src = currentPlaylist[currentVideoIndex];
+                    videoPlayer.play().catch(error => {
+                        console.error("Autoplay of the next video was prevented:", error);
+                    });
+                } else {
+                    // All videos in the playlist have been played
+                    closeModal();
+                }
+            };
 
-    .movie-card:hover {  
-        transform: translateY(-10px) scale(1.03);  
-        box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);  
-    }  
+            /**
+             * Opens the video modal and starts playing the first video.
+             */
+            const openModal = () => {
+                if (currentPlaylist.length > 0) {
+                    currentVideoIndex = 0;
+                    videoPlayer.src = currentPlaylist[currentVideoIndex];
+                    modal.classList.add('active');
+                    body.classList.add('modal-open');
+                    // Attempt to play the video directly
+                    videoPlayer.play().catch(error => {
+                        console.error("Autoplay was prevented by the browser:", error);
+                    });
+                }
+            };
 
-    .movie-poster {  
-        position: relative;  
-        padding-top: 56.25%; /* 16:9 Aspect Ratio */  
-        background-color: #000;  
-    }  
+            /**
+             * Closes the video modal and resets the player.
+             */
+            const closeModal = () => {
+                modal.classList.remove('active');
+                body.classList.remove('modal-open');
+                videoPlayer.pause();
+                videoPlayer.src = ''; // Clear the video source
+                currentPlaylist = []; // Clear the playlist
+                currentVideoIndex = 0; // Reset the playlist index
+            };
 
-    .movie-poster img {  
-        position: absolute;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        display: block;  
-        object-fit: cover;  
-    }  
+            // Add click listeners to all movie cards
+            movieCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const playlistSrc = card.dataset.videoPlaylist;
+                    if (playlistSrc) {
+                        // Split the data attribute string into an array of URLs
+                        currentPlaylist = playlistSrc.split(',').map(src => src.trim());
+                        openModal();
+                    }
+                });
+            });
 
-    .status-tag {  
-        position: absolute;  
-        top: 10px;  
-        left: 10px;  
-        padding: 5px 12px;  
-        border-radius: 20px;  
-        font-size: 0.8em;  
-        font-weight: 700;  
-        color: #fff;  
-        text-transform: uppercase;  
-        z-index: 1;  
-    }  
-    .status-tag.now-showing {  
-        background-color: var(--primary-color);  
-    }  
-    .status-tag.coming-soon {  
-        background-color: var(--text-muted);  
-    }  
+            // Add click listeners for closing the modal
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                // Close modal if the overlay background is clicked, but not the video itself
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
 
-    .movie-info {  
-        padding: 20px;  
-    }  
+            // Listen for when a video ends to play the next one
+            videoPlayer.addEventListener('ended', playNextVideo);
+        });
+    </script>
 
-    .movie-title {  
-        font-size: 1.3em;  
-        font-weight: 700;  
-        margin: 0 0 10px 0;  
-        white-space: nowrap;  
-        overflow: hidden;  
-        text-overflow: ellipsis;  
-    }  
+</body>
 
-    .movie-details {  
-        font-size: 0.9em;  
-        color: var(--text-muted);  
-    }  
-
-    /* --- Footer --- */  
-    .main-footer {  
-        text-align: center;  
-        padding: 40px 20px;  
-        margin-top: 50px;  
-        border-top: 1px solid #222;  
-    }  
-
-    /* --- Video Modal Styles --- */  
-    .modal-overlay {  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(0, 0, 0, 0.85);  
-        backdrop-filter: blur(5px);  
-        display: none; /* Hidden by default */  
-        justify-content: center;  
-        align-items: center;  
-        z-index: 1000;  
-    }  
-    .modal-overlay.active {  
-        display: flex; /* Shown when active */  
-    }  
-    .modal-content {  
-        position: relative;  
-        width: 90%;  
-        max-width: 1100px;  
-    }  
-    .close-button {  
-        position: absolute;  
-        top: -45px; /* Positioned above the video */  
-        right: 0;  
-        font-size: 40px;  
-        color: #fff;  
-        cursor: pointer;  
-        line-height: 1;  
-    }  
-    .video-container {  
-        position: relative;  
-        padding-top: 56.25%; /* 16:9 Aspect Ratio */  
-        height: 0;  
-        background: #000;  
-    }  
-    .video-container video { /* Updated from iframe to video */  
-        position: absolute;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        border: 0;  
-    }  
-
-</style>
-
-</head>  
-<body>  <header class="main-header">  
-    <a href="#" class="logo">Echo<span>X</span>perience</a>  
-    <nav class="main-nav">  
-        <a href="#" class="active">หน้าแรก</a>  
-        <a href="#">ภาพยนตร์</a>  
-        <a href="#">แพ็กเกจ</a>  
-        <a href="#">ติดต่อเรา</a>  
-    </nav>  
-</header>  
-
-<main class="container">  
-    <section class="experience-section">  
-        <form class="experience-form">  
-            <div class="form-group">  
-                <label for="movie-select">เลือกภาพยนตร์</label>  
-                <select id="movie-select">  
-                    <option>Colorful Stage! The Movie: A Miku Who Can't Sing</option>  
-                    <option>Senpai Is an Otokonoko: Clear After the Rain</option>  
-                </select>  
-            </div>  
-            <div class="form-group">  
-                <label for="format-select">เลือกรูปแบบการรับชม</label>  
-                <select id="format-select">  
-                    <option>รับชมออนไลน์ (Streaming)</option>  
-                    <option>ไพรเวทโฮมเธียเตอร์ (บางกะปิ)</option>  
-                    <option>แผ่นหนัง DVD-RIP</option>  
-                    <option>แผ่นหนัง BD-RIP</option>  
-                    <option>USB</option>  
-                </select>  
-            </div>  
-            <div class="form-group">  
-                <label for="date-select">เลือกวันที่</label>  
-                <input type="date" id="date-select" value="2025-11-08">  
-            </div>  
-            <div class="form-group">  
-                <label for="text-normal">เมื่อทำเสร็จแล้วให้แคปหน้าจอและส่งไปยัง hanakphiraki@gmail.com หรือ FB: Hanako Hiraki เพื่อทำการรับตั๋ว</label>    
-            </div>  
-        </form>  
-    </section>  
-
-    <section class="movie-showcase">  
-        <h2 class="section-title">เร็วๆ นี้ (Coming Soon)</h2>  
-        <div class="movie-grid">  
-            <!-- Changed data-video-src to data-video-playlist and added both video files -->  
-            <div class="movie-card" data-video-playlist="https://www.youtube-nocookie.com/embed/ysum6SigALw?si=JCa2VAyLFbPsLZSH">   
-                <div class="movie-poster">  
-                     <img src="https://i.postimg.cc/TYWVDYcp/37-26-C6678.png" alt="Colorful Stage Movie Poster">  
-                    <div class="status-tag coming-soon">Coming Soon</div>  
-                </div>  
-                <div class="movie-info">  
-                    <h3 class="movie-title">Colorful Stage! The Movie: A Miku Who Can't Sing</h3>  
-                    <p class="movie-details">เพลง / อนิเมะ / ดราม่า</p>  
-                </div>  
-            </div>  
-            
-            <div class="movie-card" data-video-playlist="https://www.youtube-nocookie.com/embed/ysum6SigALw?si=JCa2VAyLFbPsLZSH">   
-                <div class="movie-poster">  
-                     <img src="https://static.wikia.nocookie.net/senpaiisanotokonoko/images/f/f3/Senpai_wa_Otokonoko_-_Clear_After_the_Rain_Key_Visual_2.jpg" alt="Senpai Is an Otokonoko Movie Poster">  
-                    <div class="status-tag coming-soon">Coming Soon</div>  
-                </div>  
-                <div class="movie-info">  
-                    <h3 class="movie-title">Senpai Is an Otokonoko: Clear After the Rain</h3>  
-                    <p class="movie-details">คอมเมดี้ / โรแมนติก / ดราม่า</p>  
-                </div>  
-            </div>   
-            
-        </div>  
-    </section>  
-
-</main>  
-
-<footer class="main-footer">  
-    <p>© 2025 EchoXperience. Your Private Cinema Experience.</p>  
-</footer>  
-
-<div id="video-modal" class="modal-overlay">  
-    <div class="modal-content">  
-        <span class="close-button">×</span>  
-        <div class="video-container">  
-            <!-- Replaced iframe with video tag -->  
-            <video id="video-player" controls></video>  
-        </div>  
-    </div>  
-</div>  
-
-<script>  
-    document.addEventListener('DOMContentLoaded', () => {  
-        const movieCards = document.querySelectorAll('.movie-card');  
-        const modal = document.getElementById('video-modal');  
-        // This now correctly refers to the <video> element  
-        const videoPlayer = document.getElementById('video-player');  
-        const closeButton = document.querySelector('.close-button');  
-        const body = document.body;  
-
-        // Variables to manage the playlist  
-        let currentPlaylist = [];  
-        let currentVideoIndex = 0;  
-
-        // Function to play the next video in the playlist  
-        const playNextVideo = () => {  
-            currentVideoIndex++;  
-            if (currentVideoIndex < currentPlaylist.length) {  
-                videoPlayer.src = currentPlaylist[currentVideoIndex];  
-                videoPlayer.play();  
-            } else {  
-                // If the playlist is finished, close the modal  
-                closeModal();  
-            }  
-        };  
-
-        // Updated openModal to handle playlists  
-        const openModal = () => {  
-            if (currentPlaylist.length > 0) {  
-                currentVideoIndex = 0;  
-                videoPlayer.src = currentPlaylist[currentVideoIndex];  
-                modal.classList.add('active');  
-                body.classList.add('modal-open');  
-                // We call .play() on the video element directly  
-                videoPlayer.play().catch(error => {  
-                    console.error("Autoplay was prevented by the browser:", error);  
-                    // If autoplay fails, the user can click the play button on the controls.  
-                });  
-            }  
-        };  
-
-        // Updated closeModal to reset the player and playlist  
-        const closeModal = () => {  
-            modal.classList.remove('active');  
-            body.classList.remove('modal-open');  
-            videoPlayer.pause();  
-            videoPlayer.src = '';  
-            // Clear the playlist variables  
-            currentPlaylist = [];  
-            currentVideoIndex = 0;  
-        };  
-
-        // Updated click listener to read the playlist  
-        movieCards.forEach(card => {  
-            card.addEventListener('click', () => {  
-                const playlistSrc = card.dataset.videoPlaylist;  
-                if (playlistSrc) {  
-                    // Split the string of video sources into an array  
-                    currentPlaylist = playlistSrc.split(',').map(src => src.trim());  
-                    openModal();  
-                }  
-            });  
-        });  
-
-        closeButton.addEventListener('click', closeModal);  
-
-        modal.addEventListener('click', (event) => {  
-            // Close modal if the overlay background is clicked  
-            if (event.target === modal) {  
-                closeModal();  
-            }  
-        });  
-
-        // Add an event listener to the video player that triggers when a video ends  
-        videoPlayer.addEventListener('ended', playNextVideo);  
-    });  
-</script>
-
-</body>  
 </html>

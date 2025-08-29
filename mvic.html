@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoXperience - Movie List</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Sarabun font and video modal */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+        
+        /* Apply Sarabun font and set base styles */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #000;
+            color: #f5f5f5;
+        }
+
+        /* Prevent scrolling when modal is active */
+        .modal-open {
+            overflow: hidden;
+        }
+
+        /* Video modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        /* Video container for 16:9 aspect ratio */
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            padding-top: 50.625%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .trailer-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .trailer-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950">
+
+    <!-- Header section -->
+    <header class="sticky top-0 z-50 bg-gray-950/70 backdrop-blur-lg shadow-lg">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center py-4 px-6">
+            <a href="#" class="text-3xl font-bold text-white tracking-tight">Echo<span class="text-red-600">X</span>perience</a>
+            <nav class="flex-grow mt-4 sm:mt-0 sm:ml-8 text-center sm:text-left">
+                <a href="index.html" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">หน้าแรก</a>
+                <a href="#" class="text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ภาพยนตร์</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">แพ็กเกจ</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ติดต่อเรา</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-12">
+            ภาพยนตร์ที่กำลังจะมาถึงเร็วๆนี้
+        </h1>
+
+        <!-- Updated grid layout for 2 movies per row on larger screens -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <!-- Movie Card 1 -->
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl trailer-card">
+                <!-- Taller image container for vertical poster -->
+                <div class="relative w-full h-[450px]">
+                    <img src="https://i.postimg.cc/FFkHwSZY/img-kv01-spd.jpg" alt="Movie Poster1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h2 class="text-2xl font-bold text-white">Colorful Stage! The Movie: A Miku Who Can't Sing</h2>
+                        <p class="text-sm text-gray-300">เข้าฉาย: 8 พฤศจิกายน 2568</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-400 text-base mb-4">
+                        เรื่องย่อ: ภาพยนตร์เล่าเรื่องราวต้นฉบับที่ตัวละครได้พบกับมิกุ ซึ่งดูแตกต่างจากมิกุของแต่ละ เซไก เธอสารภาพว่ามีคนที่เธออยากส่งเสียงไปหา แต่ไม่ว่าเธอจะร้องเพลงมากแค่ไหน เสียงของเธอก็ไปไม่ถึงพวกเขา มิกุเชื่อว่าหากเธอได้เรียนรู้เพิ่มเติมเกี่ยวกับผู้คนที่รู้เรื่อง เซไก เธออาจจะสามารถส่งเสียงของเธอไปถึงคนเหล่านั้นได้
+                    </p>
+                    <!-- Trailer button is now inside the content area -->
+                    <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200" data-trailer-url="https://youtu.be/2dSGCzeuPlA?list=RD2dSGCzeuPlA">
+                        ดูตัวอย่าง
+                    </button>
+                </div>
+            </div>
+
+            <!-- Movie Card 2 -->
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl trailer-card">
+                <!-- Taller image container for vertical poster -->
+                <div class="relative w-full h-[450px]">
+                    <img src="https://static.wikia.nocookie.net/senpaiisanotokonoko/images/f/f3/Senpai_wa_Otokonoko_-_Clear_After_the_Rain_Key_Visual_2.jpg" alt="Movie Poster2" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h2 class="text-2xl font-bold text-white">Senpai Is an Otokonoko: Clear After the Rain</h2>
+                        <p class="text-sm text-gray-300">เข้าฉาย: 2569</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-400 text-base mb-4">
+                        เรื่องย่อ: ไม่พบเรื่องย่อ
+                    </p>
+                    <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200" data-trailer-url="https://www.youtube.com/embed/FlsCjrzrm9M?autoplay=1&rel=0">
+                        ดูตัวอย่าง
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Add more movie cards here as needed -->
+
+        </div>
+    </main>
+
+    <main class="container mx-auto px-4 py-8 md:py-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-12">
+            ภาพยนตร์ที่กำลังรอการยืนยันเข้าฉาย
+        </h1>
+
+            <p class="text-gray-400 text-base mb-4">
+                 ไม่ค้นพบ
+            </p>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-gray-400 py-8 mt-16 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 EchoXperience. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="video-container">
+            <button id="close-modal" class="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors duration-200 text-2xl font-bold">
+                &times;
+            </button>
+            <iframe id="video-iframe" class="rounded-lg" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- JavaScript for video modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoModal = document.getElementById('video-modal');
+            const closeButton = document.getElementById('close-modal');
+            const videoIframe = document.getElementById('video-iframe');
+            const playButtons = document.querySelectorAll('[data-trailer-url]');
+
+            playButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const trailerUrl = event.currentTarget.dataset.trailerUrl;
+                    videoIframe.src = trailerUrl;
+                    videoModal.classList.add('active');
+                    document.body.classList.add('modal-open');
+                });
+            });
+
+            closeButton.addEventListener('click', () => {
+                videoIframe.src = ''; // Stop the video
+                videoModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            });
+
+            // Close modal when clicking outside the video container
+            videoModal.addEventListener('click', (event) => {
+                if (event.target === videoModal) {
+                    videoIframe.src = '';
+                    videoModal.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,93 +1,92 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>LIVE STREAM | orhanakph.space</title>
-  <style>
-    body {
-      background: #0d0d0d;
-      color: #fff;
-      font-family: "Segoe UI", sans-serif;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    h2 {
-      margin-bottom: 20px;
-    }
-    video {
-      width: 80%;
-      max-width: 1280px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-      background: #000; /* เพิ่มพื้นหลังสีดำเผื่อวิดีโอโหลดยังไม่ขึ้น */
-    }
-    /* สร้าง CSS สำหรับ container */
-    #stream-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>LIVE STREAM | orhanakph.space</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: "Segoe UI", sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        video {
+            width: 80%;
+            max-width: 1280px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+            background: #000;
+        }
+        #stream-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 
-  <div id="stream-container"></div>
+    <div id="stream-container"></div>
 
-  <script>
-    // 🔐 รหัสเข้า (5 คน)
-    const validPasswords = ["fR7kW2nZpLx9QaT3vYbC", "hL9aRzX3WmD1pVfQ7kYt", "G2mXvL8qHtZ1rjCpYs4B", "aX9T0mZk7QyP3vN2sBfL", "tdMgCU7plli0RgBeMfC6"];
+    <script>
+        // 🔐 รหัสเข้า (5 คน)
+        const validPasswords = ["fR7kW2nZpLx9QaT3vYbC", "hL9aRzX3WmD1pVfQ7kYt", "G2mXvL8qHtZ1rjCpYs4B", "aX9T0mZk7QyP3vN2sBfL", "tdMgCU7plli0RgBeMfC6"];
 
-    // 3. อ้างอิงถึง Container ที่เราสร้างไว้
-    const container = document.getElementById('stream-container');
+        const container = document.getElementById('stream-container');
 
-    // ถามรหัสก่อนเข้าชม
-    const pass = prompt("กรุณาใส่รหัสเข้าชม Live Stream:");
+        // ถามรหัสก่อนเข้าชม
+        const pass = prompt("กรุณาใส่รหัสเข้าชม Live Stream:");
 
-    if (!validPasswords.includes(pass)) {
-      // 4. ถ้าผิด ให้แสดงผลใน Container
-      container.innerHTML = "<h2>❌ รหัสไม่ถูกต้อง หมดสิทธิ์เข้าชมหรือลองใหม่อีก</h2>";
-    } else {
-      // ✅ ถ้ารหัสถูก ให้เปิด live
-      // 4. ถ้าถูก ก็ให้แสดงผลใน Container
-      container.innerHTML = `
-        <h2>🔴 LIVE | Colorful Stage! เดอะมูฟวี่ มิกุที่ไร้เสียงเพลง (720p24 5.1AAC)</h2>
-        <video id="live" controls autoplay muted></video>
-        <p style="opacity:0.6;font-size:14px;">หากวิดีโอไม่เล่น อาจต้องรอประมาณ 30 วินาทีหลังเริ่มสตรีม</p>
-      `;
+        if (!validPasswords.includes(pass)) {
+            // ❌ รหัสไม่ถูกต้อง
+            container.innerHTML = "<h2>❌ รหัสไม่ถูกต้อง หมดสิทธิ์เข้าชมหรือลองใหม่อีก</h2>";
+        } else {
+            // ✅ ถ้ารหัสถูก ให้เปิด live
+            // 1. สร้างแท็กวิดีโอและข้อความ
+            container.innerHTML = `
+                <h2>🔴 LIVE | Colorful Stage! เดอะมูฟวี่ มิกุที่ไร้เสียงเพลง (720p24 5.1AAC)</h2>
+                <video id="live" controls autoplay muted></video>
+                <p style="opacity:0.6;font-size:14px;">หากวิดีโอไม่เล่น อาจต้องรอประมาณ 30 วินาทีหลังเริ่มสตรีม</p>
+            `;
 
-      // โค้ดส่วนนี้จะทำงานต่อได้แล้ว เพราะมันไม่ได้ถูกลบทิ้ง
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/hls.js@latest";
-      script.onload = () => {
-        const video = document.getElementById('live');
-        const hlsUrl = 'https://orhanakph.space/hls/test.m3u8'; // 🔗 ลิงก์ HLS ของคุณ
+            // 2. โค้ด Player ที่ทำงานทันที เพราะ HLS.js ถูกโหลดแล้ว
+            const video = document.getElementById('live');
+            
+            // 🚨 แก้ URL เป็น HTTP และ Stream Key ที่ถูกต้อง (ต้องไม่มีพอร์ต :80)
+            const hlsUrl = 'http://orhanakph.space/hls/streamkey.m3u8'; 
 
-        if (window.Hls && Hls.isSupported()) {
-          const hls = new Hls();
-          hls.loadSource(hlsUrl);
-          hls.attachMedia(video);
-          // อาจจะสั่ง .play() เพื่อความชัวร์ หลังจาก attach
-          hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-            video.play();
-          });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = hlsUrl;
-          video.addEventListener('loadedmetadata', function() {
-            video.play();
-          });
+            if (window.Hls && Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(hlsUrl);
+                hls.attachMedia(video);
+                
+                // สั่งเล่นเมื่อ Manifest ถูกโหลด/แนบมีเดียสำเร็จ (สั่ง play แค่ครั้งเดียว)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // สำหรับ Safari
+                video.src = hlsUrl;
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            } else {
+                 container.innerHTML += "<p style='color:red;'>เบราว์เซอร์ไม่รองรับการเล่น HLS</p>";
+            }
         }
-      };
-      // 5. เพิ่ม script hls.js เข้าไปใน body (ซึ่งปลอดภัย)
-      document.body.appendChild(script);
-    }
-  </script>
+    </script>
 
 </body>
 </html>

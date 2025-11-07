@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Private Live</title>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body style="background:#000;text-align:center;">
+<video id="video" controls autoplay width="1280" height="720"></video>
+<script>
+(async ()=>{
+  const code = prompt("ใส่รหัสเข้าชม:");
+  const token = code.trim();
+  const url = `http://YOUR_SERVER_IP:8080/hls/stream.m3u8?token=${token}`;
+  const video = document.getElementById('video');
 
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(video);
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = url;
+  }
+})();
+</script>
+</body>
+</html>

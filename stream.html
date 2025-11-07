@@ -1,27 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-<meta charset="utf-8">
-<title>Private Live</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <meta charset="UTF-8">
+  <title>LIVE STREAM | orhanakph.space</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    video {
+      width: 80%;
+      max-width: 1280px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    }
+  </style>
 </head>
-<body style="background:#000;text-align:center;">
-<video id="video" controls autoplay width="1280" height="720"></video>
-<script>
-(async ()=>{
-  const code = prompt("ใส่รหัสเข้าชม:");
-  const token = code.trim();
-  const url = `http://YOUR_SERVER_IP:8080/hls/stream.m3u8?token=${token}`;
-  const video = document.getElementById('video');
+<body>
 
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(video);
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = url;
+<script>
+  // 🔐 รหัสเข้า (5 คน)
+  const validPasswords = ["alpha123", "beta234", "gamma345", "delta456", "omega567"];
+
+  // ถามรหัสก่อนเข้าชม
+  const pass = prompt("กรุณาใส่รหัสเข้าชม Live Stream:");
+
+  if (!validPasswords.includes(pass)) {
+    document.body.innerHTML = "<h2>❌ รหัสไม่ถูกต้อง หรือหมดสิทธิ์เข้าชม</h2>";
+  } else {
+    // ✅ ถ้ารหัสถูก ให้เปิด live
+    document.body.innerHTML = `
+      <h2>🔴 LIVE | orhanakph.space</h2>
+      <video id="live" controls autoplay></video>
+      <p style="opacity:0.6;font-size:14px;">หากวิดีโอไม่เล่น อาจต้องรอประมาณ 30 วินาทีหลังเริ่มสตรีม</p>
+      <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+      <script>
+        const video = document.getElementById('live');
+        const hlsUrl = 'https://orhanakph.space/hls/test.m3u8'; // 🔗 ลิงก์ HLS ของคุณ
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(hlsUrl);
+          hls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = hlsUrl;
+        }
+      </script>
+    `;
   }
-})();
 </script>
+
 </body>
 </html>

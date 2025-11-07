@@ -5,6 +5,7 @@
     <title>LIVE STREAM | orhanakph.space</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
+        /* ... สไตล์คงเดิม ... */
         body {
             background: #0d0d0d;
             color: #fff;
@@ -61,18 +62,18 @@
                 <p style="opacity:0.6;font-size:14px;">หากวิดีโอไม่เล่น อาจต้องรอประมาณ 30 วินาทีหลังเริ่มสตรีม</p>
             `;
 
-            // 2. โค้ด Player ที่ทำงานทันที เพราะ HLS.js ถูกโหลดแล้ว
             const video = document.getElementById('live');
             
-            // 🚨 แก้ URL เป็น HTTP และ Stream Key ที่ถูกต้อง (ต้องไม่มีพอร์ต :80)
-            const hlsUrl = 'http://orhanakph.space/hls/streamkey.m3u8'; 
+            // 🚨 ใช้โดเมน CDN ของ Bunny.net
+            // ***ต้องเปลี่ยน streamkey ให้ตรงกับ OBS***
+            const hlsUrl = 'https://orhanakphstreammv.b-cdn.net/hls/streamkey.m3u8'; 
 
+            // ตรวจสอบว่า HLS.js ถูกโหลดแล้ว
             if (window.Hls && Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource(hlsUrl);
                 hls.attachMedia(video);
                 
-                // สั่งเล่นเมื่อ Manifest ถูกโหลด/แนบมีเดียสำเร็จ (สั่ง play แค่ครั้งเดียว)
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
                     video.play();
                 });

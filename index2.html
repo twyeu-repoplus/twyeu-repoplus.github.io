@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoXperience - Your Private Cinema</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Sarabun font */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+        
+        /* Apply Sarabun font and set base styles */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #000;
+            color: #f5f5f5;
+        }
+
+        /* Video modal overlay is no longer needed but keeping styles for consistency
+           in case it's used elsewhere. */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        /* Video container for 16:9 aspect ratio */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            height: 0;
+            background: #000;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-950">
+
+    <!-- Header section -->
+    <header class="sticky top-0 z-50 bg-gray-950/70 backdrop-blur-lg shadow-lg">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center py-4 px-6">
+            <a href="#" class="text-3xl font-bold text-white tracking-tight">Echo<span class="text-red-600">X</span>perience</a>
+            <nav class="flex-grow mt-4 sm:mt-0 sm:ml-8 text-center sm:text-left">
+                <a href="index.html" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">หน้าแรก</a>
+                <a href="mvic.html" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ภาพยนตร์</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">แพ็กเกจ</a>
+                <a href="#" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">ติดต่อเรา</a>
+                <a href="stream.html" class="text-gray-400 hover:text-white font-bold transition-colors duration-200 mx-2 sm:mx-4">Live Streaming</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content container -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Experience selector form section -->
+        <section class="bg-gray-900 rounded-xl p-6 sm:p-8 border border-gray-800 shadow-2xl">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6">เลือกประสบการณ์</h2>
+            <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                <div class="flex flex-col">
+                    <label for="movie-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกภาพยนตร์</label>
+                    <select id="movie-select" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                        <option>Colorful Stage! The Movie: A Miku Who Can't Sing</option>
+                        <option>Senpai Is an Otokonoko: Clear After the Rain</option>
+                        <option>Avatar: The Way of Water</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="format-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกรูปแบบการรับชม</label>
+                    <select id="format-select" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                        <option>รับชมออนไลน์ (Live Streaming)</option>
+                        <option>ไพรเวทโฮมเธียเตอร์ (HDD PACK)</option>
+                        <option>แผ่นหนัง DVD-RIP</option>
+                        <option>แผ่นหนัง BD-RIP</option>
+                        <option>USB</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="date-select" class="text-gray-400 text-sm font-semibold mb-2">เลือกวันที่</label>
+                    <input type="date" id="date-select" value="2025-11-08" class="bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 border border-gray-700">
+                </div>
+                <!-- This div is for the instructions/button -->
+                <div class="flex flex-col">
+                    <p class="text-gray-400 text-sm font-semibold mb-4 lg:mb-2 leading-relaxed">เมื่อทำเสร็จแล้วให้แคปหน้าจอและส่งไปยัง hanakphiraki@gmail.com หรือ FB: Fujiwara Sora (ปกขาวดำ) เพื่อทำการรับตั๋ว / For foreigners, press the red button below</p>
+                    <button type="submit" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">
+                        <a href="https://www.facebook.com/share/1PbKUcLu3K/" 
+                        class="block text-center bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105 no-underline">
+                        กดเพื่อติดต่อผ่านทาง FB
+                        </a>
+
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Movie showcase section -->
+        <section class="mt-12 sm:mt-16">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-red-600 pl-4">เร็วๆ นี้ (Coming Soon)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Movie card 1 -->
+                <a href="5sF9GwU0f86b.html" class="block bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105">
+                    <div class="relative w-full aspect-video bg-gray-950">
+                        <img src="https://i.postimg.cc/TYWVDYcp/37-26-C6678.png" alt="Colorful Stage Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white uppercase">perpare</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white truncate">Colorful Stage! The Movie: A Miku Who Can't Sing</h3>
+                        <p class="text-sm text-gray-400 mt-1">เพลง / อนิเมะ / ดราม่า  |  105 นาที  | เรื่มสตรีม --/12/68 จนถึง 14/02/69 แค่ 4 รอบ</p>
+                        <p class="text-sm text-gray-400 mt-1">หลังฉายจบแล้ว จะมีการเปิดให้พรีออเดอร์ของนานก่อนจัดส่ง 2 เดือน</p>
+                    </div>
+                </a>
+
+                <!-- Movie card 2 -->
+                <a href="oD8fh0aj5Djp.html" class="block bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105">
+                    <div class="relative w-full aspect-video bg-gray-950">
+                        <img src="https://static.wikia.nocookie.net/senpaiisanotokonoko/images/f/f3/Senpai_wa_Otokonoko_-_Clear_After_the_Rain_Key_Visual_2.jpg" alt="Senpai Is an Otokonoko Movie Poster" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-gray-500 text-white uppercase">Coming Soon</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white truncate">Senpai Is an Otokonoko: Clear After the Rain</h3>
+                        <p class="text-sm text-gray-400 mt-1">คอมเมดี้ / โรแมนติก / ดราม่า  |  112 นาที  |  เริ่มสตรีม --/--/69 จนถึง --/--/69 แค่ - รอบ</p>
+                        <p class="text-sm text-gray-400 mt-1">ขณะนี้แผ่น BD ของ JP ออกจำหน่ายแล้วเมื่อ 27/08/68</p>
+                        <p class="text-sm text-gray-400 mt-1">หลังฉายจบแล้ว จะมีการเปิดให้พรีออเดอร์ของนานก่อนจัดส่ง 2 เดือน</p>
+                    </div>
+                </a>
+                                <!-- Movie card 3 -->
+                <a href="#.html" class="block bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl cursor-pointer group transition-all duration-300 transform hover:scale-105">
+                    <div class="relative w-full aspect-video bg-gray-950">
+                        <img src="?" alt="AVATAR THE WAY OF WATER" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <span class="absolute top-3 left-3 px-4 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white uppercase">prepare</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white truncate">อวตาร: วิถีแห่งสายน้ำ<h3>
+                        <p class="text-sm text-gray-400 mt-1">ไซไฟ / แฟนตาซี / ดราม่า  |  192 นาที  |  เริ่มสตรีม 15/11/68 จนถึง 20/12/68 แค่ 3 รอบ</p>
+                        <p class="text-sm text-gray-400 mt-1">ไม่จำหน่าย BD</p>
+                        <p class="text-sm text-gray-400 mt-1">ไม่จำหน่าย BD</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer section -->
+    <footer class="text-center text-gray-500 text-sm py-8 border-t border-gray-800 mt-16">
+        <p>© 2025 EchoXperience. Your Private Cinema Experience.</p>
+        <p>© 2024-2025 THE WORLD IMPACT GROUP</p>
+        <p>© CLOUDFLARE/GITHUB</p>
+    </footer>
+
+    <!-- Video modal container is now unused but kept in the HTML structure -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="relative w-11/12 max-w-5xl">
+            <span class="close-button absolute -top-10 sm:-top-12 right-0 text-4xl sm:text-5xl font-light text-white cursor-pointer transition-colors duration-200 hover:text-red-600">&times;</span>
+            <div class="video-container rounded-lg overflow-hidden shadow-2xl">
+                <video id="video-player" controls></video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for form functionality and other non-modal interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Note: The video modal JavaScript has been removed as it is no longer needed.
+            // Clicking on the movie posters now navigates directly to a new HTML page.
+        });
+    </script>
+
+</body>
+
+</html>
+
+
+ให้คอยนานๆ มันซมซาน รู้มั้ยเอ่ย
